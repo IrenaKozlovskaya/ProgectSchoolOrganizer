@@ -13,18 +13,13 @@
     <org.springframework.version>5.2.8.RELEASE</org.springframework.version>
   </properties>
 
-  <name>SpringWebLibrary</name>
+  <name>SchoolOrganizer</name>
   <groupId>org.example</groupId>
-  <artifactId>SpringWebLibrary</artifactId>
+  <artifactId>SchoolOrganizer</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-war-plugin</artifactId>
-      <version>3.3.1</version>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>

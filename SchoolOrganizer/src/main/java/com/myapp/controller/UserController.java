@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.myapp.service.UserService;
 
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -42,19 +41,15 @@ public class UserController {
     public ModelAndView registerUser(@ModelAttribute("userJSP") User user) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userJSP", user);
-        List<User> users = userService.getAllUsers();
 
-        if (users != null) {
-            for (User u : users) {
-                if (u.getEmail().equals(user.getEmail())) {
-                    modelAndView.setViewName("index");
-                    return modelAndView;
-                }
-            }
+        User dbUser = userService.getUser(user.getEmail());
+
+        if (dbUser != null) {
+            modelAndView.setViewName("index");
+            return modelAndView;
         }
         userService.createUser(user);
         modelAndView.setViewName("successfullyRegisteredUser");
-
         return modelAndView;
     }
 
@@ -70,20 +65,17 @@ public class UserController {
     public ModelAndView loginUser(User user) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("loginUser", user);
-        List<User> users = userService.getAllUsers();
+        User dbUser = userService.getUser(user.getEmail());
 
-        if (users != null) {
-            for (User u : users) {
-                if (u.getEmail().equals(user.getEmail())) {
-                    if (u.getPassword().equals(user.getPassword())) {
-                        modelAndView.setViewName("authorization");
-                    } else {
-                        modelAndView.setViewName("passwordError");
-                    }
-                    return modelAndView;
+        if (dbUser != null) {
+            if (dbUser.getPassword().equals(user.getPassword())) {
+                modelAndView.setViewName("authorization");
+                return modelAndView;
 
-                }
+            } else {
+                modelAndView.setViewName("passwordError");
             }
+            return modelAndView;
         }
         modelAndView.setViewName("authorizationError");
 

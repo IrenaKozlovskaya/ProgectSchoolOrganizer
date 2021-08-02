@@ -11,6 +11,12 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
+    private final String sqlCreateUser = "INSERT INTO users(email, password) values (?, ?)";
+    private final String sqlGetAllUsers = "SELECT * FROM users u LEFT JOIN roles r ON u.role_id = r.id";
+    private final String sqlGetUser = sqlGetAllUsers + " WHERE email = ?";
+    private final String sqlUpdateUser = "UPDATE FROM users (password) value(?) WHERE email = ? ";
+    private final String sqlDeleteUser = "DELETE * FROM users  u WHERE u.email=?";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -22,38 +28,32 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void createUser(User user) {
 
-        String sql = "INSERT INTO users(email, password) values (?, ?)";
-        jdbcTemplate.update(sql, user.getEmail(), user.getPassword());
+        jdbcTemplate.update(sqlCreateUser, user.getEmail(), user.getPassword());
+    }
 
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = jdbcTemplate.query(sqlGetAllUsers, new UserMapper());
+        return users;
     }
 
     @Override
     public User getUser(String email) {
-        String sql = "SELECT * FROM users WHERE email = ?";
-        User user = jdbcTemplate.query(sql, new UserMapper(), email)
+        User user = jdbcTemplate.query(sqlGetUser, new UserMapper(), email)
                 .stream().findAny().orElse(null);
         return user;
-    }
-
-    public List<User> getAllUsers() {
-        String sql = "SELECT * FROM users";
-        List<User> users = jdbcTemplate.query(sql, new UserMapper());
-        return users;
     }
 
     @Override
     public void updateUser(User user) {
 
-        String sql = "UPDATE FROM users (password) value(?) WHERE email = ? ";
-        jdbcTemplate.update(sql, user.getPassword(), user.getEmail());
-
+        jdbcTemplate.update(sqlUpdateUser, user.getPassword(), user.getEmail());
     }
 
     @Override
     public void deleteUser(String email) {
 
-        String sql = "DELETE * FROM users  u WHERE u.email=?";
-        jdbcTemplate.update(sql, email);
+        jdbcTemplate.update(sqlDeleteUser, email);
 
     }
 }
