@@ -8,6 +8,8 @@ public interface UserService {
 
     void createUser(User user);
 
+    void setUpDefaultUserRole(Long id);
+
     User getUser(String email);
 
     List<User> getAllUsers();
@@ -15,4 +17,5 @@ public interface UserService {
     void updateUser(User user);
 
     void deleteUser(String login);
+
 }

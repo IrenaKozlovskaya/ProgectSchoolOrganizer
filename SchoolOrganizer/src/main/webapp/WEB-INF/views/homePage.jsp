@@ -17,7 +17,7 @@
     <h4>Войдите в свой аккаунт или зарегистрируйтесть как новый пользователь</h4>
     <br><br>
     <div class="buttons">
-        <a href="${pageContext.request.contextPath}/login" class="button">Вход</a>
+        <a href="${pageContext.request.contextPath}/enter" class="button">Вход</a>
         <a href="${pageContext.request.contextPath}/register" class="button">Регистрация</a>
     </div>
 </form>

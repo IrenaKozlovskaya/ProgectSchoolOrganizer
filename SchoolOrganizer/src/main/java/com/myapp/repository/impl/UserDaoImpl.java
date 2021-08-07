@@ -1,6 +1,8 @@
 package com.myapp.repository.impl;
 
+import com.myapp.model.Role;
 import com.myapp.model.User;
+import com.myapp.repository.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,16 +14,22 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     private final String sqlCreateUser = "INSERT INTO users(email, password) values (?, ?)";
-    private final String sqlGetAllUsers = "SELECT * FROM users u LEFT JOIN roles r ON u.role_id = r.id";
-    private final String sqlGetUser = sqlGetAllUsers + " WHERE email = ?";
+    private final String sqlDefaultUserRole = "INSERT INTO user_roles (user_id,role_id) VALUES (?,?)";
+    private final String sqlGetAllUsers = "SELECT u.id, u.email, u.password FROM users u ";
+    private final String sqlGetUser = sqlGetAllUsers + " WHERE u.email = ?";
     private final String sqlUpdateUser = "UPDATE FROM users (password) value(?) WHERE email = ? ";
-    private final String sqlDeleteUser = "DELETE * FROM users  u WHERE u.email=?";
+    private final String sqlDeleteUser = "DELETE * FROM users u WHERE u.email = ?";
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserMapper userMapper;
+    private final RoleDao roleDao;
+
 
     @Autowired
-    public UserDaoImpl(JdbcTemplate jdbcTemplate) {
+    public UserDaoImpl(JdbcTemplate jdbcTemplate, UserMapper userMapper, RoleDao roleDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userMapper = userMapper;
+        this.roleDao = roleDao;
     }
 
 
@@ -32,16 +40,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void setUpDefaultRole(Long id) {
+
+        Role roleUser = roleDao.getRoleByName("ROLE_USER");
+        jdbcTemplate.update(sqlDefaultUserRole, id, roleUser.getId());
+    }
+
+    @Override
     public List<User> getAllUsers() {
-        List<User> users = jdbcTemplate.query(sqlGetAllUsers, new UserMapper());
-        return users;
+
+        return jdbcTemplate.query(sqlGetAllUsers, userMapper);
     }
 
     @Override
     public User getUser(String email) {
-        User user = jdbcTemplate.query(sqlGetUser, new UserMapper(), email)
+
+        return  jdbcTemplate.query(sqlGetUser, userMapper, email)
                 .stream().findAny().orElse(null);
-        return user;
     }
 
     @Override
@@ -56,4 +71,5 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(sqlDeleteUser, email);
 
     }
+
 }
