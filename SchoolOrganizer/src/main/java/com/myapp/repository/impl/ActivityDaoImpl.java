@@ -13,8 +13,9 @@ import java.util.List;
 public class ActivityDaoImpl implements ActivityDao {
 
     private final String sqlCreateActivity = "INSERT INTO activity(name, date) values (?, ?)";
-    private final String sqlGetAllActivities = "SELECT * FROM activity a ";
+    private final String sqlGetAllActivities = "SELECT a.id, a.name, a.date, a_t.name FROM activity a LEFT JOIN activity_type a_t ON a.activity_type_id = a_t.id ";
     private final String sqlGetActivity = sqlGetAllActivities + " WHERE a.name = ?";
+    private final String sqlGetActivitiesByActivityType = sqlGetAllActivities + " WHERE a_t.name = ?";
     private final String sqlGetActivitiesByUserID = sqlGetAllActivities + "INNER JOIN activity_users a_u ON a.id = a_u.activity_id INNER JOIN user u ON u.id=a_u.user_id WHERE u.id = ?";
     private final String sqlUpdateActivity = "UPDATE FROM activity (name, date) value(?,?) WHERE id = ? ";
     private final String sqlDeleteActivity = "DELETE * FROM activity a WHERE a.id=?";
@@ -39,9 +40,15 @@ public class ActivityDaoImpl implements ActivityDao {
                 .stream().findAny().orElse(null);
     }
 
+    @Override
     public List<Activity> getActivitiesByUserID(long id) {
         return jdbcTemplate.query(sqlGetActivitiesByUserID, new ActivityMapper(), id);
 
+    }
+
+    @Override
+    public List<Activity> getActivitiesByActivityType(String name) {
+        return jdbcTemplate.query(sqlGetActivitiesByActivityType, new ActivityMapper(), name);
     }
 
     @Override

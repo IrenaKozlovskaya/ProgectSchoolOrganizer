@@ -187,6 +187,35 @@ VALUES ('Благотоворительные');
 INSERT INTO category (category)
 VALUES ('Выездные');
 
+INSERT INTO activity_type (name, category_id)
+VALUES ('Футбол', 1);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Баскетбол', 1);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Соревнования', 2);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Факультативы', 2);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Лабораторные исследования', 3);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Кино', 4);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Музей', 4);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Линейка', 5);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Выступления в городе', 5);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Красный крест', 6);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Туры по Беларусии', 7);
+INSERT INTO activity_type (name, category_id)
+VALUES ('Туры за рубеж', 7);
+
+
+
+
+
 
 
 

@@ -12,6 +12,8 @@ public interface ActivityService {
 
     List<Activity> getActivitiesByUser(long id);
 
+    List<Activity> getActivitiesByActivityType(String name);
+
     List<Activity> getAllActivities();
 
     void updateActivity(Activity activity);

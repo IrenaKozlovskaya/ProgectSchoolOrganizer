@@ -52,6 +52,17 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public List<Activity> getActivitiesByActivityType(String name) {
+        try {
+            return activityDao.getActivitiesByActivityType(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Activity> getAllActivities() {
         try {
             return activityDao.getAllActivities();

@@ -21,10 +21,12 @@ public class ActivityTypeDaoImpl implements ActivityTypeDao {
     private final String sqlDeleteActivityType = "DELETE * FROM activity_type a_t WHERE a_t.id=?";
 
     private final JdbcTemplate jdbcTemplate;
+    private final ActivityTypeMapper activityTypeMapper;
 
     @Autowired
-    public ActivityTypeDaoImpl(JdbcTemplate jdbcTemplate) {
+    public ActivityTypeDaoImpl(JdbcTemplate jdbcTemplate, ActivityTypeMapper activityTypeMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.activityTypeMapper = activityTypeMapper;
     }
 
 
@@ -37,23 +39,20 @@ public class ActivityTypeDaoImpl implements ActivityTypeDao {
 
     @Override
     public ActivityType getActivityTypeByName(String name) {
-        ActivityType activityType = jdbcTemplate.query(sqlGetActivityType, new ActivityTypeMapper(), name)
+        return jdbcTemplate.query(sqlGetActivityType, activityTypeMapper, name)
                 .stream().findAny().orElse(null);
-        return activityType;
     }
 
 
     @Override
     public List<ActivityType> getAllActivityTypes() {
-        List<ActivityType> activityTypes = jdbcTemplate.query(sqlGetAllActivityTypes, new ActivityTypeMapper());
-        return activityTypes;
+        return jdbcTemplate.query(sqlGetAllActivityTypes, activityTypeMapper);
 
     }
 
     @Override
     public List<ActivityType> getAllActivityTypesByCategory(String category) {
-        List<ActivityType> activityTypes = jdbcTemplate.query(sqlGetAllActivityTypesByCategory, new ActivityTypeMapper(), category);
-        return activityTypes;
+        return jdbcTemplate.query(sqlGetAllActivityTypesByCategory, activityTypeMapper, category);
 
     }
 
