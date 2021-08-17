@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
-
+    private final String sqlDefaultUserRole = "INSERT INTO user_roles (user_id,role_id) VALUES (?,?)";
     private final String sqlGetRolesByUser = "SELECT *  FROM roles r INNER JOIN user_roles u_r ON r.id = u_r.role_id INNER JOIN users u ON u.id=u_r.user_id WHERE u.email = ?";
     private final String sqlGetRole = "SELECT *  FROM roles r WHERE r.role = ?";
 
@@ -21,6 +21,13 @@ public class RoleDaoImpl implements RoleDao {
     public RoleDaoImpl(JdbcTemplate jdbcTemplate, RoleMapper roleMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.roleMapper = roleMapper;
+    }
+
+    @Override
+    public void setUpDefaultRole(Long id) {
+
+        Role role = getRoleByName("ROLE_USER");
+        jdbcTemplate.update(sqlDefaultUserRole, id, role.getId());
     }
 
 

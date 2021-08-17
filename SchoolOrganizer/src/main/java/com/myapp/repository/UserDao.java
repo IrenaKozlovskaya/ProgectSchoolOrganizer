@@ -16,6 +16,4 @@ public interface UserDao {
 
     void deleteUser(String login);
 
-    void setUpDefaultRole(Long id);
-
 }

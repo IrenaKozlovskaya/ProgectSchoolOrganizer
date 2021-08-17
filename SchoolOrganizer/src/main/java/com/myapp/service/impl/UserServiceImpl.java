@@ -31,15 +31,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public void setUpDefaultUserRole(Long id) {
-        try {
-            userDao.setUpDefaultRole(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public User getUser(String email) {

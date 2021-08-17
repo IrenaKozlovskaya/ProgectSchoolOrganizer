@@ -1,8 +1,6 @@
 package com.myapp.repository.impl;
 
-import com.myapp.model.Role;
 import com.myapp.model.User;
-import com.myapp.repository.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,7 +12,6 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     private final String sqlCreateUser = "INSERT INTO users(email, password) values (?, ?)";
-    private final String sqlDefaultUserRole = "INSERT INTO user_roles (user_id,role_id) VALUES (?,?)";
     private final String sqlGetAllUsers = "SELECT u.id, u.email, u.password FROM users u ";
     private final String sqlGetUser = sqlGetAllUsers + " WHERE u.email = ?";
     private final String sqlUpdateUser = "UPDATE FROM users (password) value(?) WHERE email = ? ";
@@ -22,14 +19,12 @@ public class UserDaoImpl implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final UserMapper userMapper;
-    private final RoleDao roleDao;
 
 
     @Autowired
-    public UserDaoImpl(JdbcTemplate jdbcTemplate, UserMapper userMapper, RoleDao roleDao) {
+    public UserDaoImpl(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.userMapper = userMapper;
-        this.roleDao = roleDao;
     }
 
 
@@ -39,12 +34,6 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(sqlCreateUser, user.getEmail(), user.getPassword());
     }
 
-    @Override
-    public void setUpDefaultRole(Long id) {
-
-        Role roleUser = roleDao.getRoleByName("ROLE_USER");
-        jdbcTemplate.update(sqlDefaultUserRole, id, roleUser.getId());
-    }
 
     @Override
     public List<User> getAllUsers() {
@@ -55,7 +44,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUser(String email) {
 
-        return  jdbcTemplate.query(sqlGetUser, userMapper, email)
+        return jdbcTemplate.query(sqlGetUser, userMapper, email)
                 .stream().findAny().orElse(null);
     }
 

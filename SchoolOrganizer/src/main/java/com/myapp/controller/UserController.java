@@ -1,6 +1,7 @@
 package com.myapp.controller;
 
 import com.myapp.model.User;
+import com.myapp.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,14 @@ import com.myapp.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
+
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @RequestMapping("/")
@@ -48,7 +52,7 @@ public class UserController {
         }
         userService.createUser(user);
         Long user_id = userService.getUser(user.getEmail()).getId();
-        userService.setUpDefaultUserRole(user_id);
+        roleService.setUpDefaultUserRole(user_id);
 
         modelAndView.setViewName("successfullyRegisteredUser");
         return modelAndView;

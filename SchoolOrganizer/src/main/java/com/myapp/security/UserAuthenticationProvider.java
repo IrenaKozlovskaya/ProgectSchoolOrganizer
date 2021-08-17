@@ -31,18 +31,17 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
         User user = userService.getUser(email);
 
-        if (user == null || !user.getEmail().equalsIgnoreCase(email)) {
+        if (user == null) {
             throw new BadCredentialsException("Username not found.");
         }
 
         if (!password.equals(user.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
-        if (email.equalsIgnoreCase(user.getEmail()) && password.equals(user.getPassword())) {
 
             return new UsernamePasswordAuthenticationToken(user, null,  user.getRoles());
-        }
-        return new UsernamePasswordAuthenticationToken(user, null);
+
+
     }
 
     @Override
