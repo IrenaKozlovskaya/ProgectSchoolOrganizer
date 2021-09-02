@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
+
     @Autowired
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
 
     @Override
     public User getUser(String email) {
@@ -60,7 +62,6 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
-
     }
 
     @Override
@@ -73,4 +74,5 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
 }

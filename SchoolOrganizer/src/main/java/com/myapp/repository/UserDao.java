@@ -15,4 +15,5 @@ public interface UserDao {
     void updateUser(User user);
 
     void deleteUser(String login);
+
 }
