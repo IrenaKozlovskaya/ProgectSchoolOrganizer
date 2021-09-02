@@ -12,16 +12,19 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     private final String sqlCreateUser = "INSERT INTO users(email, password) values (?, ?)";
-    private final String sqlGetAllUsers = "SELECT * FROM users u LEFT JOIN roles r ON u.role_id = r.id";
-    private final String sqlGetUser = sqlGetAllUsers + " WHERE email = ?";
+    private final String sqlGetAllUsers = "SELECT u.id, u.email, u.password FROM users u ";
+    private final String sqlGetUser = sqlGetAllUsers + " WHERE u.email = ?";
     private final String sqlUpdateUser = "UPDATE FROM users (password) value(?) WHERE email = ? ";
-    private final String sqlDeleteUser = "DELETE * FROM users  u WHERE u.email=?";
+    private final String sqlDeleteUser = "DELETE * FROM users u WHERE u.email = ?";
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserMapper userMapper;
+
 
     @Autowired
-    public UserDaoImpl(JdbcTemplate jdbcTemplate) {
+    public UserDaoImpl(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userMapper = userMapper;
     }
 
 
@@ -31,17 +34,18 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(sqlCreateUser, user.getEmail(), user.getPassword());
     }
 
+
     @Override
     public List<User> getAllUsers() {
-        List<User> users = jdbcTemplate.query(sqlGetAllUsers, new UserMapper());
-        return users;
+
+        return jdbcTemplate.query(sqlGetAllUsers, userMapper);
     }
 
     @Override
     public User getUser(String email) {
-        User user = jdbcTemplate.query(sqlGetUser, new UserMapper(), email)
+
+        return jdbcTemplate.query(sqlGetUser, userMapper, email)
                 .stream().findAny().orElse(null);
-        return user;
     }
 
     @Override
@@ -56,4 +60,5 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(sqlDeleteUser, email);
 
     }
+
 }

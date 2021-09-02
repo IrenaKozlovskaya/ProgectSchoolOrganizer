@@ -8,6 +8,8 @@
     <a href="${pageContext.request.contextPath}/register">Register</a>
     |
     <a href="${pageContext.request.contextPath}/login">Login</a>
+    |
+    <a href="${pageContext.request.contextPath}/logout">Logout</a>
 
 </div>
 

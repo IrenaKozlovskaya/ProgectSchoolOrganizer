@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
 <head>
     <meta charset="UTF-8">
     <title>Log in</title>
@@ -11,9 +10,14 @@
 <jsp:include page="menu.jsp"></jsp:include>
 <br><br>
 
-<form class="form" action="login" method="post">
+<c:if test="${not empty error}">
+    <div class="title">${error}</div>
+</c:if>
 
-    <h1 class="form_title">Вход</h1>
+
+<form class="form" action="<c:url value="login" />" method="post">
+
+    <h1 class="title">Вход</h1>
     <table style="with: 50%">
         <tr>
             <td>Логин</td>
