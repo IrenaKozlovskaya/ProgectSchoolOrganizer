@@ -16,6 +16,7 @@ public class Activity {
     private long id;
     private String name;
     private String date;
+    private long activityTypeId;
     private List<User> managers = new ArrayList<>();
     private List<User> participants = new ArrayList<>();
 

@@ -25,7 +25,6 @@ public class CategoryMapper implements RowMapper<Category> {
         Category category = new Category();
         category.setId(resultSet.getLong("id"));
         category.setCategory(resultSet.getString("category"));
-        category.setActivityTypes(activityTypeDao.getAllActivityTypesByCategory(resultSet.getString("category")));
 
         return category;
     }

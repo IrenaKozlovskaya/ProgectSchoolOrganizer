@@ -14,7 +14,7 @@ public interface ActivityDao {
 
     List<Activity> getActivitiesByUserID(long id);
 
-    List<Activity> getActivitiesByActivityType(String name);
+    List<Activity> getActivitiesByActivityType(long id);
 
     void updateActivity(Activity activity);
 

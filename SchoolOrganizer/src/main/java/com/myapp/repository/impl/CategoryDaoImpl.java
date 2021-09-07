@@ -13,7 +13,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     private final String sqlCreateCategory = "INSERT INTO category(category) value (?)";
     private final String sqlGetAllCategories = "SELECT * FROM category";
-    private final String sqlGetCategory = sqlGetAllCategories + " WHERE category = ?";
+    private final String sqlGetCategory = sqlGetAllCategories + " WHERE id = ?";
     private final String sqlUpdateCategory = "UPDATE FROM category (category) value(?) WHERE id = ?";
     private final String sqlDeleteCategory = "DELETE * FROM category WHERE id = ?";
 
@@ -33,8 +33,8 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category getCategoryByName(String name) {
-        return jdbcTemplate.query(sqlGetCategory, categoryMapper, name)
+    public Category getCategoryByID(long id) {
+        return jdbcTemplate.query(sqlGetCategory, categoryMapper, id)
                 .stream().findAny().orElse(null);
     }
 

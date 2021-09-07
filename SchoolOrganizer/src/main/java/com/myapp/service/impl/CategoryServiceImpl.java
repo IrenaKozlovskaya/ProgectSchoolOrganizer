@@ -30,9 +30,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategory(String name) {
+    public Category getCategory(long id) {
         try {
-            return categoryDao.getCategoryByName(name);
+            return categoryDao.getCategoryByID(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

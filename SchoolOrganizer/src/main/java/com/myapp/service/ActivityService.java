@@ -12,7 +12,7 @@ public interface ActivityService {
 
     List<Activity> getActivitiesByUser(long id);
 
-    List<Activity> getActivitiesByActivityType(String name);
+    List<Activity> getActivitiesByActivityType(long id);
 
     List<Activity> getAllActivities();
 

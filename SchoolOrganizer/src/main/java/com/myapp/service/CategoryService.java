@@ -8,7 +8,7 @@ public interface CategoryService {
 
     void createCategory(Category category);
 
-    Category getCategory(String name);
+    Category getCategory(long id);
 
     List<Category> getAllActivityTypes();
 

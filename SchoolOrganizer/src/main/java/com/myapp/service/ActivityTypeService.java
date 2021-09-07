@@ -8,9 +8,9 @@ public interface ActivityTypeService {
 
     void createActivityType(ActivityType activityType);
 
-    ActivityType getActivityType(String name);
+    ActivityType getActivityType(long id);
 
-    List<ActivityType> getAllActivityTypesByCategory(String category);
+    List<ActivityType> getAllActivityTypesByCategory(long id);
 
     List<ActivityType> getAllActivityTypes();
 

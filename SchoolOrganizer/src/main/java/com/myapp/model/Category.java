@@ -14,6 +14,5 @@ public class Category {
 
     private long id;
     private String category;
-    private List<ActivityType> activityTypes;
 
 }

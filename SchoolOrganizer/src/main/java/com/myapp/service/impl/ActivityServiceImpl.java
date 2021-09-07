@@ -52,9 +52,9 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<Activity> getActivitiesByActivityType(String name) {
+    public List<Activity> getActivitiesByActivityType(long id) {
         try {
-            return activityDao.getActivitiesByActivityType(name);
+            return activityDao.getActivitiesByActivityType(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -30,9 +30,9 @@ public class ActivityTypeServiceImpl implements ActivityTypeService {
     }
 
     @Override
-    public ActivityType getActivityType(String name) {
+    public ActivityType getActivityType(long id) {
         try {
-            return activityTypeDao.getActivityTypeByName(name);
+            return activityTypeDao.getActivityTypeByID(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,16 +40,15 @@ public class ActivityTypeServiceImpl implements ActivityTypeService {
         return null;
     }
 
-    @Override
-    public List<ActivityType> getAllActivityTypesByCategory(String category) {
+   @Override
+   public List<ActivityType> getAllActivityTypesByCategory(long id) {
         try {
-            return activityTypeDao.getAllActivityTypesByCategory(category);
+           return activityTypeDao.getAllActivityTypesByCategoryID(id);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
+           e.printStackTrace();
+       }
+       return null;
+   }
 
     @Override
     public List<ActivityType> getAllActivityTypes() {

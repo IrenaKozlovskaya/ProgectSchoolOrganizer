@@ -16,8 +16,7 @@ public class ActivityType {
 
     private long id;
     private String name;
-    private long category_id;
-    private List<Activity> activities;
+    private long categoryId;
 
 
 }

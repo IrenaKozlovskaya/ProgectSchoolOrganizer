@@ -8,11 +8,11 @@ public interface ActivityTypeDao {
 
     void createActivityType(ActivityType activityType);
 
-    ActivityType getActivityTypeByName(String name);
+    ActivityType getActivityTypeByID(long id);
 
     List<ActivityType> getAllActivityTypes();
 
-    List<ActivityType> getAllActivityTypesByCategory(String category);
+    List<ActivityType> getAllActivityTypesByCategoryID(long id);
 
     void updateActivityType(ActivityType activityType);
 
